@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<blueprint xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:jaxrs="http://cxf.apache.org/blueprint/jaxrs"
+           xmlns:cxf="http://cxf.apache.org/blueprint/core"
+           xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+
+  http://cxf.apache.org/blueprint/jaxrs http://cxf.apache.org/schemas/blueprint/jaxrs.xsd
+  http://cxf.apache.org/blueprint/core http://cxf.apache.org/schemas/blueprint/core.xsd">
+    <!-- 1 -->
+    <cxf:bus id="cxfBus1">
+        <cxf:features>
+            <cxf:logging/>
+        </cxf:features>
+    </cxf:bus>
+
+    <!-- 2 -->
+    <jaxrs:server address="/karaf" id="restService">
+        <jaxrs:serviceBeans>
+            <ref component-id="writeMessageRestImpl"/>
+        </jaxrs:serviceBeans>
+    </jaxrs:server>
+
+    <!-- 3 -->
+    <!-- Implementation of the rest service -->
+    <bean id="writeMessageRestImpl" class="by.borisevich.rest.impl.WriteMessageRestImpl">
+        <property name="writeMessageService" ref="writeMessageServiceBean"/>  <!--Points to the reference below -->
+    </bean>
+
+    <!-- 4 -->
+    <!-- This has to point to the service registered through service.xml in the service.impl project -->
+
+    <reference id="writeMessageServiceBean"
+               interface="by.borisevich.service.WriteMessageService">
+    </reference>
+
+</blueprint>

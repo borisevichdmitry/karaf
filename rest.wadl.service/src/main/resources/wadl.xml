@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://wadl.dev.java.net/2009/02">
+    <grammars/>
+    <resources base="http://localhost:8181/cxf/karaf">
+        <resource path="/message">
+            <method name="POST">
+                <request>
+                    <param name="text" style="query" type="xs:string"/>
+                </request>
+                <response status="200">
+                    <representation mediaType="application/json"/>
+                </response>
+                <response status="400">
+                    <representation mediaType="application/json"/>
+                </response>
+                <response status="500">
+                    <representation mediaType="application/json"/>
+                </response>
+            </method>
+            <resource path="/{id}">
+                <param name="id" style="template" type="xs:string"/>
+                <method name="GET">
+                    <request/>
+                    <response status="200">
+                        <representation mediaType="application/json"/>
+                    </response>
+                    <response status="500">
+                        <representation mediaType="application/json"/>
+                    </response>
+                    <response status="404">
+                        <representation mediaType="application/json"/>
+                    </response>
+                </method>
+            </resource>
+        </resource>
+    </resources>
+</application>
